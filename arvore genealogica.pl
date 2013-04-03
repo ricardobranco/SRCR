@@ -68,7 +68,7 @@ naturalidade(kevan,casterly_rock).
 naturalidade(tywin,casterly_rock).
 naturalidade(selyse,brightwater_keep).
 naturalidade(shireen,dragonstone).
-
+naturalidade(brynden,riverrun).
 
 filho(rhaenys,elia).
 filho(rhaenys,rhaegar).
@@ -117,7 +117,9 @@ filho(tyrion,tywin).
 filho(lancel,tywin).
 
 irmao(kevan,tywin).
-
+irmao(stannis,robert).
+irmao(renly,robert).
+irmao(hoster,brynden).
 
 
 pai(P,F):-
@@ -126,7 +128,9 @@ pai(P,F):-
 irmao(I1,I2):-
 	pai(P,I1),pai(P,I2).
 irmao(I1,I2):-
-	irmao(I2,I1).	
+	irmao(I1,I3),irmao(I2,I3).		
+irmao(I1,I2):-
+	irmao(I2,I1).
 
 tio(T,S):-
 	pai(P,S),irmao(P,T).
