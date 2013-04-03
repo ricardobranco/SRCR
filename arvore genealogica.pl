@@ -25,12 +25,108 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado filho: Filho,Pai -> {V,F,D}
 
-filho( joao,jose ).
-filho( jose,manuel ).
-filho( carlos,jose ).
+
+naturalidade(aerys_II,kings_landing).
+naturalidade(rhaela,kings_landing).
+naturalidade(viserys,kings_landing).
+naturalidade(rhaegar,kings_landing).
+naturalidade(aegon,kings_landing).
+naturalidade(elia,sunspear).
+naturalidade(rhaenys,kings_landing).
+naturalidade(daenerys,dragonstone).
+naturalidade(drogo,vaes_dothrak).
+naturalidade(rhaego,red_waste).
+naturalidade(rickard,winterfell).
+naturalidade(brandon,winterfell).
+naturalidade(eddard,winterfell).
+naturalidade(lyanna,winterfell).
+naturalidade(benjen,winterfell).
+naturalidade(john_snow,winterfell).
+naturalidade(sansa,winterfell).
+naturalidade(bran,winterfell).
+naturalidade(rickon,winterfell).
+naturalidade(arya,winterfell).
+naturalidade(robb,winterfell).
+naturalidade(catelyn,riverrun).
+naturalidade(hoster,riverrun).
+naturalidade(minisa,harrenhal).
+naturalidade(edmure,riverrun).
+naturalidade(lysa,riverrun).
+naturalidade(robin,the_eyrie).
+naturalidade(jon,the_eyrie).
+naturalidade(robert,storms_end).
+naturalidade(stannis,storms_end).
+naturalidade(renly,storms_end).
+naturalidade(cersei,casterly_rock).
+naturalidade(joffrey,kings_landing).
+naturalidade(myrcella,kings_landing).
+naturalidade(tommen,kings_landing).
+naturalidade(jaime,casterly_rock).
+naturalidade(tyrion,casterly_rock).
+naturalidade(lancel,casterly_rock).
+naturalidade(kevan,casterly_rock).
+naturalidade(tywin,casterly_rock).
+naturalidade(selyse,brightwater_keep).
+naturalidade(shireen,dragonstone).
+
+
+filho(rhaenys,elia).
+filho(rhaenys,rhaegar).
+filho(aegon,elia).
+filho(aegon,rhaegar).
+filho(rhaego,daenerys).
+filho(rhaego,drogo).
+filho(daenerys,aerys_II).
+filho(daenerys,rhaela).
+filho(viserys,aerys_II).
+filho(viserys,rhaela).
+filho(rhaegar,aerys_II).
+filho(rhaegar,rhaela).
+filho(robb,eddard).
+filho(robb,catelyn).
+filho(sansa,eddard).
+filho(sansa,catelyn).
+filho(arya,eddard).
+filho(arya,catelyn).
+filho(bran,eddard).
+filho(bran,catelyn).
+filho(rickon,eddard).
+filho(rickon,catelyn).
+filho(john_snow,eddard).
+filho(eddard,rickard).
+filho(lyanna,rickard).
+filho(benjen,rickard).
+filho(brandon,rickard).
+filho(robin,jon).
+filho(robin,lysa).
+filho(catelyn,hoster).
+filho(catelyn,minisa).
+filho(lysa,hoster).
+filho(lysa,minisa).
+filho(edmure,hoster).
+filho(edmure,minisa).
+filho(joffrey,robert).
+filho(joffrey,cersei).
+filho(myrcella,robert).
+filho(myrcella,cersei).
+filho(tommen,robert).
+filho(tommen,cersei).
+filho(cersei,tywin).
+filho(jaime,tywin).
+filho(tyrion,tywin).
+filho(lancel,tywin).
+
+irmao(kevan,tywin).
+
+
+
+pai(P,F):-
+	filho(F,P).
 
 irmao(I1,I2):-
 	pai(P,I1),pai(P,I2).
+irmao(I1,I2):-
+	irmao(I2,I1).	
 
 tio(T,S):-
 	pai(P,S),irmao(P,T).
@@ -117,9 +213,6 @@ ascendentes(D,G,As):-
 
 +pai(P,F)::(solucoes((Ps),(pai(Ps,F)),S),
 			comprimento(S,N),N=<2).
-
-pai(P,F):-
-	filho(F,P).
 			
 +neto(N,A)::(solucoes((N,A), (pai(N,A)),S),
 			comprimento(S,Q),Q==1).		
