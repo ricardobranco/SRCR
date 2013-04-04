@@ -127,12 +127,20 @@ irmao(renly,robert).
 irmao(hoster,brynden).
 
 
+
 pai(P,F):-
 	filho(F,P).
 
 irmao(I1,I2):-
+<<<<<<< HEAD
 	pai(P,I1),pai(P,I2),I1\==I2.
 	
+=======
+	pai(P,I1),pai(P,I2).
+		
+
+
+>>>>>>> cenas
 tio(T,S):-
 	pai(P,S),irmao(P,T).
 tio(T,S):-
@@ -140,9 +148,7 @@ tio(T,S):-
 
 primo(P1,P2):-
 	pai(P,P1),tio(P,P2).
-
-primo(P2,P1):-
-	pai(P,P1),tio(P,P2).
+ 
 
 avo(A,N):-
 	filho(N,X),pai(A,X).
