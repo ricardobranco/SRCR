@@ -21,6 +21,7 @@
 :- dynamic filho/2.
 :- dynamic pai/2.
 :- dynamic neto/2.
+:- dynamic irmao/2.
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado filho: Filho,Pai -> {V,F,D}
@@ -129,8 +130,6 @@ irmao(I1,I2):-
 	pai(P,I1),pai(P,I2).
 irmao(I1,I2):-
 	irmao(I1,I3),irmao(I2,I3).		
-irmao(I1,I2):-
-	irmao(I2,I1).
 
 tio(T,S):-
 	pai(P,S),irmao(P,T).
@@ -231,8 +230,7 @@ ascendentes(D,G,As):-
 
 +naturalidade(L,P) :: (solucoes(Ls,naturalidade(Ls,P),S),comprimento(S,N),N=<1).
 
-familiar(A,B,Rs):-
-	solucoes(X,X(A,B),Rs).
+
 
 natural(1).
 natural(N):-
