@@ -21,7 +21,10 @@
 :- dynamic filho/2.
 :- dynamic pai/2.
 :- dynamic neto/2.
+:- dynamic avo/2.
 :- dynamic irmao/2.
+:- dynamic tio/2.
+:- dynamic naturalidade/2.
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado filho: Filho,Pai -> {V,F,D}
@@ -115,7 +118,8 @@ filho(tommen,cersei).
 filho(cersei,tywin).
 filho(jaime,tywin).
 filho(tyrion,tywin).
-filho(lancel,tywin).
+filho(lancel,kevan).
+
 
 irmao(kevan,tywin).
 irmao(stannis,robert).
@@ -127,12 +131,12 @@ pai(P,F):-
 	filho(F,P).
 
 irmao(I1,I2):-
-	pai(P,I1),pai(P,I2).
-irmao(I1,I2):-
-	irmao(I1,I3),irmao(I2,I3).		
-
+	pai(P,I1),pai(P,I2),I1\==I2.
+	
 tio(T,S):-
 	pai(P,S),irmao(P,T).
+tio(T,S):-
+	pai(P,S),irmao(T,P).
 
 primo(P1,P2):-
 	pai(P,P1),tio(P,P2).
@@ -149,8 +153,6 @@ neto(N,A):-
 descendente(D,A):-
 	filho(D,A);(filho(D,X),descendente(X,A)).
 
-avo(A,N):-
-	graudesc(A,N,2).
 
 bisavo(X,Y):-
 	graudesc(Y,X,3).
@@ -177,12 +179,12 @@ graudesc(X,Y,2):-
 	neto(X,Y).
 
 graudesc(X,Y,G):-
-	filho(X,Z),graudesc(Z,Y,N), G is N+1.
+	G>2, N is G-1, filho(X,Z), graudesc(Z,Y,N).
 
 descendentes(I,0,[]).
 descendentes(I,N,L):-
-	solucoes(As,graudesc(I,As,N),S),
-	descendentes(I,G,L2), G is N-1,
+	solucoes(As,graudesc(As,I,N),S),
+	G is N-1, descendentes(I,G,L2), 
 	concat(S,L2,L).
 
 grauasc(X,Y,N):-
@@ -190,9 +192,12 @@ grauasc(X,Y,N):-
 
 ascendentes(D,0,[]).
 ascendentes(D,G,As):-
-	solucoes(A,grauasc(D,A,G),L1),
-	ascendentes(D,N,L2),N is G-1,
+	solucoes(A,graudesc(D,A,G),L1),
+	N is G-1, ascendentes(D,N,L2),
 	concat(L1,L2,As).
+	
+	
+familiar(X,Y).
 	
 % Invariante Estrutural:  nao permitir a insercao de conhecimento
 %                         repetido
@@ -228,7 +233,7 @@ ascendentes(D,G,As):-
 			
 +descendente(D,A,N)::(natural(N)).
 
-+naturalidade(L,P) :: (solucoes(Ls,naturalidade(Ls,P),S),comprimento(S,N),N=<1).
++naturalidade(P,L)::(solucoes(Ls,naturalidade(P,Ls),S),comprimento(S,N),N=<1).
 
 
 
@@ -271,3 +276,8 @@ comprimento([A|B],N):-
 concat([],L2,L2).
 concat([X|L1],L2,[X|L]):-
 	concat(L1,L2,L).
+	
+pertence( X,[X|L] ).
+pertence( X,[Y|L] ) :-
+    X \== Y,
+    pertence( X,L ).
