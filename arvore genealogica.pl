@@ -157,6 +157,9 @@ descendente(D,A):-
 bisavo(X,Y):-
 	graudesc(Y,X,3).
 
+bisneto(X,Y):-
+	bisavo(Y,X).
+	
 trisavo(X,Y):-
 	graudesc(Y,X,4).
 
@@ -197,7 +200,32 @@ ascendentes(D,G,As):-
 	concat(L1,L2,As).
 	
 	
-familiar(X,Y).
+familiar(X,Y,filho):-
+	filho(X,Y).
+
+familiar(X,Y,pai):-
+	pai(X,Y).
+	
+familiar(X,Y,neto):-
+	neto(X,Y).
+	
+familiar(X,Y,avo):-
+	avo(X,Y).
+
+familiar(X,Y,bisavo):-
+	bisavo(X,Y).
+
+familiar(X,Y,bisneto):-
+	bisneto(X,Y).
+	
+familiar(X,Y,trisavo):-
+	trisavo(X,Y).
+	
+familiar(X,Y,primo):-
+	primo(X,Y).
+
+familiar(X,Y,tio):-
+	tio(X,Y).
 	
 % Invariante Estrutural:  nao permitir a insercao de conhecimento
 %                         repetido
@@ -231,7 +259,7 @@ familiar(X,Y).
 
 +avo(A,N)::(solucoes(As,avo(As,N),L),comprimento(L,Q),Q=<4)
 			
-+descendente(D,A,N)::(natural(N)).
++grauasc(D,A,N)::(natural(N)).
 
 +naturalidade(P,L)::(solucoes(Ls,naturalidade(P,Ls),S),comprimento(S,N),N=<1).
 
