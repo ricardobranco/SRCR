@@ -46,13 +46,14 @@ nao(_).
 % principio(Medicamento, Principio) ->{V,F,D}
 principio(ziagenavir,sulfato_de_abacavirHK).
 principio(proflam,acido_alendronico).
-principio(diamox,acetazolamida).
+
 principio(fluimucil,acetilcisteina).
 principio(valdoxan,acetaz).
 
 
 % apresentacao(Medicamento, Apresentacao) ->{V,F,D}
 apresentacao(ziagenavir,unidades_24).
+-apresentacao(ziagenavir,xarope).
 apresentacao(proflam,unidades_12).
 apresentacao(diamox,unidades_25).
 apresentacao(fluimucil,efervescente_600mg).
@@ -134,6 +135,13 @@ introducao(valdoxan,1,2,1999).
 %--------------------------------
 
 -validade(Md,D,M,A):-nao(validade(Md,D,M,A)),nao(excepcao(validade(Md,D,M,A))).
+excepcao(validade(Med,D,M,A)):-
+	validade(Med,desconhecido,M,A).
+excepcao(validade(Med,D,M,A)):-
+	validade(Med,D,desconhecido,A).
+excepcao(validade(Med,D,M,A)):-
+	validade(Med,D,M,desconhecido).
+	
 excepcao(validade(diamoxsan,1,3,2015)).
 
 -preco_venda(M,P):-nao(preco_venda(M,P)),nao(excepcao(preco_venda(M,P))).
@@ -143,10 +151,26 @@ excepcao(preco_venda(valdoxanas,14)).
 excepcao(aplicacao(diamoxsan,bebendo)).
 
 -apresentacao(M,A):-nao(apresentacao(M,A)),nao(excepcao(apresentacao(M,A))).
-excepcao(apresentacao(diamoxsan,sem_unidades)).
+excepcao(apresentacao(diamoxsan,comprimidos)).
 
 -principio(M,P):-nao(principio(M,P)),nao(excepcao(principio(M,P))).
-excepcao(principio(diamoxsan,nao_especificado)).
+
+excepcao(principio(Med,X)):-
+	principio(Med,nao_especificado).
+excepcao(principio(Med,X)):-
+	principio(Med,secreto).
+	
+principio(diamoxsan,nao_especificado).
+
+principio(diamox,secreto).
+
+nulo(secreto).
+
+nulos([]).
+nulos([X|L]):-
+	nulo(X),nulos(L).
+
++principio(diamox,X)::(solucoes(PS,principio(diamox,PS),S),nulos(S)).
 
 %--
 -ind_terapeutica(M,I):-nao(ind_terapeutica(M,I)),nao(excepcao(ind_terapeutica(M,I))).
@@ -183,6 +207,9 @@ excepção(apresentacao(M,A)) :- apresentacao(diamoxsan,A).
 +armazenamento( M,A,P) :: (solucoes( (M,A,P),(armazenamento( M,A,P )),S ),
                   comprimento( S,N ), N == 1
                   ).
+				  
++armazenamento(M,A,P)::(solucoes((A,P),armazenamento(M,A,P),S),
+						comprimento(S,N), N==1).
 
 +preco_venda( M,P) :: (solucoes( (M,P),(preco_venda( M,P )),S ),
                   comprimento( S,N ), N == 1
@@ -217,7 +244,7 @@ insercao( Termo ) :-
 
 	
 % Remoção do conhecimento
-regressao( T ) :- findall( I,-T::I,L ),
+regressao( T ) :- findall( I,+T::I,L ),
     			  teste( L ),
     			  remover(T).
 
