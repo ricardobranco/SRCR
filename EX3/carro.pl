@@ -23,23 +23,25 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Teoria representada na forma Agente :: Conhecimento
 
-%batman :: (  ).
+%carro:: (  ).
+carro::rodas(4).
+carro::lugares(5).
+carro::meio(terra).
+carro::material(aco).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado e_um: Agente,Classe -> {V,F}
 
-e_um(batman,ave).
-e_um(batman,mamifero).
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Iniciaizacao da vida do agente
 
 demo :-
-    write( 'Sou um Batman' ),nl,
-    in( demo( batman,Questao ) ),
-    write( 'demo( batman,Questao )' ),nl,
-    demo( batman,Questao ),
+    write( 'Sou um carro' ),nl,
+    in( demo( carro,Questao ) ),
+    write( 'demo( carro,Questao )' ),nl,
+    demo( carro,Questao ),
     demo.
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
@@ -50,7 +52,8 @@ demo( Agente,Questao ) :-
     write( ( 1,Agente::Questao ) ),nl,
     out( prova( Agente,Questao ) ).
 demo( Agente,Questao ) :-
-    e_um( Agente,Classe ),
+    retract(e_um( Agente,Classe )),
+	assert(e_um( Agente,Classe )),
     write( ( 2,e_um( Agente,Classe ) ) ),nl,
     out( demo( Classe,Questao ) ).
 demo( Agente,Questao ) :-
@@ -64,3 +67,5 @@ ligar( QN ) :-
 
 qn( L ) :-
     bagof_rd_noblock( X,X,L ).
+
+	

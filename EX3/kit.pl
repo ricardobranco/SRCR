@@ -23,22 +23,28 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Teoria representada na forma Agente :: Conhecimento
 
-%avestruz:: (  ).
+%kit:: (  ).
+kit::combustivel(luz_solar).
+kit::cor(preto).
+kit::material(rano_robos).
+kit::marca(ford).
+kit::modelo(mustangGT).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado e_um: Agente,Classe -> {V,F}
 
-e_um(avestruz,ave).
+e_um(kit,carro).
+e_um(kit,barco).
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Iniciaizacao da vida do agente
 
 demo :-
-    write( 'Sou uma AvesTruz' ),nl,
-    in( demo( avestruz,Questao ) ),
-    write( 'demo( avestruz,Questao )' ),nl,
-    demo( avestruz,Questao ),
+    write( 'Sou o Kit' ),nl,
+    in( demo( kit,Questao ) ),
+    write( 'demo( kit,Questao )' ),nl,
+    demo( kit,Questao ),
     demo.
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
@@ -49,7 +55,8 @@ demo( Agente,Questao ) :-
     write( ( 1,Agente::Questao ) ),nl,
     out( prova( Agente,Questao ) ).
 demo( Agente,Questao ) :-
-    e_um( Agente,Classe ),
+    retract(e_um( Agente,Classe )),
+	assert(e_um( Agente,Classe )),
     write( ( 2,e_um( Agente,Classe ) ) ),nl,
     out( demo( Classe,Questao ) ).
 demo( Agente,Questao ) :-
@@ -63,3 +70,6 @@ ligar( QN ) :-
 
 qn( L ) :-
     bagof_rd_noblock( X,X,L ).
+
+	
+	

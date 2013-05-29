@@ -23,22 +23,23 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Teoria representada na forma Agente :: Conhecimento
 
-%mamifero :: (  ).
+barco::meio(agua).
+barco::material(fibra).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado e_um: Agente,Classe -> {V,F}
 
-e_um(mamifero,animal).
+
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Iniciaizacao da vida do agente
 
 demo :-
-    write( 'Sou um Mamifero' ),nl,
-    in( demo( mamifero,Questao ) ),
-    write( 'demo( mamifero,Questao )' ),nl,
-    demo( mamifero,Questao ),
+    write( 'Sou um barco' ),nl,
+    in( demo( barco,Questao ) ),
+    write( 'demo( barco,Questao )' ),nl,
+    demo( barco,Questao ),
     demo.
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
