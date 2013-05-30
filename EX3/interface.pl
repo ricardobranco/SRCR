@@ -38,7 +38,7 @@
 
 demo( Agente,Questao ) :-
     out(demo(Agente,Questao)),
-	in_noblock(prova(A,X)),
+	in(prova(A,X)),
 	write( ( X ) ),nl.
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 
