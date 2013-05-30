@@ -26,7 +26,7 @@
 %kit:: (  ).
 kit::combustivel(luz_solar).
 kit::cor(preto).
-kit::material(rano_robos).
+kit::material(nano_robos).
 kit::marca(ford).
 kit::modelo(mustangGT).
 
