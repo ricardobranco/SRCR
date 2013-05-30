@@ -19,6 +19,7 @@
 % Carregamento das bibliotecas
 
 :- use_module( library( 'linda/client' ) ).
+:- linda_timeout(X,5:0).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 
@@ -37,7 +38,7 @@
 
 demo( Agente,Questao ) :-
     out(demo(Agente,Questao)),
-	in(prova(A,X)),
+	in_noblock(prova(A,X)),
 	write( ( X ) ),nl.
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 
